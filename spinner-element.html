@@ -1,0 +1,36 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="spinner-element">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * `spinner-element`
+     * This is an element based on spinkit-element created on Polymer 2
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class SpinnerElement extends Polymer.Element {
+      static get is() { return 'spinner-element'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'spinner-element'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(SpinnerElement.is, SpinnerElement);
+  </script>
+</dom-module>
