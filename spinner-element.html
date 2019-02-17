@@ -1,13 +1,63 @@
 <link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../polymer/lib/elements/dom-if.html">
+<link rel="import" href="spinner-element-styles.html">
 
 <dom-module id="spinner-element">
   <template>
-    <style>
-      :host {
-        display: block;
-      }
+    <style include="spinner-element-styles">
     </style>
-    <h2>Hello [[prop1]]!</h2>
+    <dom-if if="[[_checkSpinnerName(name, 'circle')]]" restamp>
+      <template>
+        <div class="sk-circle">
+          <div class="sk-circle1 sk-child"></div>
+          <div class="sk-circle2 sk-child"></div>
+          <div class="sk-circle3 sk-child"></div>
+          <div class="sk-circle4 sk-child"></div>
+          <div class="sk-circle5 sk-child"></div>
+          <div class="sk-circle6 sk-child"></div>
+          <div class="sk-circle7 sk-child"></div>
+          <div class="sk-circle8 sk-child"></div>
+          <div class="sk-circle9 sk-child"></div>
+          <div class="sk-circle10 sk-child"></div>
+          <div class="sk-circle11 sk-child"></div>
+          <div class="sk-circle12 sk-child"></div>
+        </div>
+      </template>
+    </dom-if>
+    <dom-if if="[[_checkSpinnerName(name, 'rotating-plane')]]" restamp>
+      <template>
+        <div class="sk-rotating-plane"></div>
+      </template>
+    </dom-if>
+    <dom-if if="[[_checkSpinnerName(name, 'wave')]]" restamp>
+      <template>
+        <div class="sk-wave">
+          <div class="sk-rect sk-rect1"></div>
+          <div class="sk-rect sk-rect2"></div>
+          <div class="sk-rect sk-rect3"></div>
+          <div class="sk-rect sk-rect4"></div>
+          <div class="sk-rect sk-rect5"></div>
+        </div>
+      </template>
+    </dom-if>
+    <dom-if if="[[_checkSpinnerName(name, 'three-bounce')]]" restamp>
+      <template>
+        <div class="sk-three-bounce">
+        <div class="sk-child sk-bounce1"></div>
+        <div class="sk-child sk-bounce2"></div>
+        <div class="sk-child sk-bounce3"></div>
+      </div>
+      </template>
+    </dom-if>
+    <dom-if if="[[_checkSpinnerName(name, 'wandering-cubes')]]" restamp>
+      <template>
+        <div class="sk-wandering-cubes">
+        <div class="sk-cube sk-cube1"></div>
+        <div class="sk-cube sk-cube2"></div>
+      </div>
+      </template>
+    </dom-if>
+
   </template>
 
   <script>
@@ -20,14 +70,68 @@
      * @demo demo/index.html
      */
     class SpinnerElement extends Polymer.Element {
-      static get is() { return 'spinner-element'; }
+      static get is() {
+        return 'spinner-element';
+      }
+
       static get properties() {
         return {
-          prop1: {
+          types: {
+            type: Array,
+            value: [
+              'rotating-plane',
+              'double-bounce',
+              'wave',
+              'wandering-cubes',
+              'spinner-pulse',
+              'chasing-dots',
+              'three-bounce',
+              'circle',
+              'cube-grid',
+              'fading-circle',
+              'folding-cube'
+            ]
+          },
+          /**
+           * Specifies the name of the spinner to be used.
+           */
+          name: {
             type: String,
-            value: 'spinner-element'
-          }
+            value: 'circle'
+          },
+          /**
+           * Specifies the size of the spinner to be used.
+           */
+          size: {
+            type: Number,
+            value: 50,
+            observer: '_onSizeChanged'
+          },
+          /**
+           * Specifies the size of the spinner to be used.
+           */
+          color: {
+            type: String,
+            value: null,
+            observer: '_onColorChanged'
+          },
         };
+      }
+
+      _checkSpinnerName(givenName, spinnerName) {
+        console.log(givenName === spinnerName);
+        if (this.types.indexOf(givenName) === -1) {
+          givenName = 'circle';
+        }
+        return givenName === spinnerName;
+      }
+
+      _onSizeChanged(size) {
+        this.updateStyles({'--spinner-element-size': size + "px"});
+      }
+
+      _onColorChanged(color) {
+        this.updateStyles({'--spinner-element-color': color});
       }
     }
 
